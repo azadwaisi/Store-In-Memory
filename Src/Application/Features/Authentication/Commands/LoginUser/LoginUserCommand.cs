@@ -10,6 +10,7 @@ namespace Application.Features.Authentication.Commands.LoginUser
 {
 	public class LoginUserCommand : IRequest<AuthResponse>
 	{
-		public required LoginUserRequest LoginDetails { get; set; }
+		public required string EmailOrUserName { get; set; }
+		public required string Password { get; set; }
 	}
 }

@@ -25,11 +25,11 @@ namespace Application.Features.Authentication.Commands.ConfirmEmail
 			var user = await _userManager.FindByIdAsync(request.UserId);
 			if (user == null)
 			{
-				return new ResultDto { IsSuccess = false , Message = "Not Found User" };
+				return ResultDto.NotFound();
 			}
 			var result = await _userManager.ConfirmEmailAsync(user, request.Token);
 
-			return new ResultDto { IsSuccess = result.Succeeded, Message = string.Join(",", result.Errors.Select(x => x.Description).ToList()) };
+			return ResultDto.Success();
 		}
 	}
 }

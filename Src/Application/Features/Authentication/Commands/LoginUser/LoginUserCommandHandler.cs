@@ -29,10 +29,10 @@ namespace Application.Features.Authentication.Commands.LoginUser
 
 		public async Task<AuthResponse> Handle(LoginUserCommand request, CancellationToken cancellationToken)
 		{
-			User user = await _userManager.FindByEmailAsync(request.LoginDetails.EmailOrUserName);
+			User user = await _userManager.FindByEmailAsync(request.EmailOrUserName);
 			if (user == null)
 			{
-				user = await _userManager.FindByNameAsync(request.LoginDetails.EmailOrUserName);
+				user = await _userManager.FindByNameAsync(request.EmailOrUserName);
 			}
 
 			if (user == null)
@@ -43,7 +43,7 @@ namespace Application.Features.Authentication.Commands.LoginUser
 
 			// lockoutOnFailure: false یعنی اگر رمز چند بار اشتباه زده شد، اکانت قفل نشود.
 			// می‌توانید این را true کنید و تنظیمات Lockout را در Identity پیکربندی کنید.
-			var result = await _signInManager.CheckPasswordSignInAsync(user, request.LoginDetails.Password, lockoutOnFailure: false);
+			var result = await _signInManager.CheckPasswordSignInAsync(user, request.Password, lockoutOnFailure: false);
 
 			if (!result.Succeeded)
 			{
