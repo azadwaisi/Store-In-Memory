@@ -20,6 +20,7 @@ using Microsoft.Extensions.Options;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
+using Infrastructure.Services.Chache;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -32,7 +33,18 @@ builder.Services.AddInfrastructureServices(builder.Configuration);
 builder.AddWebServiceCollection();
 builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
 builder.Services.AddScoped<IEmailService, EmailService>();
+// Configure Cache Options
+builder.Services.Configure<CacheOptions>(
+	builder.Configuration.GetSection(CacheOptions.SectionName));
 
+// Register Memory Cache
+builder.Services.AddMemoryCache(options =>
+{
+	options.SizeLimit = 100 * 1024 * 1024; // 100MB
+});
+
+// Register Cache Service
+//builder.Services.AddScoped<ICacheService, InMemoryCacheService>();
 
 builder.Services.AddApiVersioning(options =>
 {

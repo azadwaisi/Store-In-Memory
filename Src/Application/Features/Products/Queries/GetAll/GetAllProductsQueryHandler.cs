@@ -1,5 +1,6 @@
 ﻿using Application.Contracts;
 using Application.Dtos.Products;
+using Application.Interfaces;
 using Application.Wrappers;
 using AutoMapper;
 using Domain.Entities.Products;

@@ -17,10 +17,12 @@ namespace Application.Features.Products.Commands.AddProduct
 	{
 		private readonly IUnitOfWork _unitOfWork;
 		private readonly IMapper _mapper;
-        public AddProductCommandHandler(IUnitOfWork unitOfWork, IMapper mapper)
+		private readonly ICacheService _cacheService;
+        public AddProductCommandHandler(IUnitOfWork unitOfWork, IMapper mapper,ICacheService cacheService)
         {
 			_unitOfWork = unitOfWork;
 			_mapper = mapper;
+			_cacheService = cacheService;
 		}
         public async Task<ProductDto> Handle(AddProductCommand request, CancellationToken cancellationToken)
 		{
